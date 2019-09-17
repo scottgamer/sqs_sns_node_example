@@ -1,0 +1,19 @@
+{
+  "name": "aws_sns_sqs_integration_node",
+  "version": "1.0.0",
+  "description": "Project example using and integrating aws sqs and sns",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Richard Munoz",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.529.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
