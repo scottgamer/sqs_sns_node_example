@@ -4,7 +4,9 @@
   "description": "Project example using and integrating aws sqs and sns",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "babel src -d build & npm run start",
+    "start": "node build/app.js"
   },
   "author": "Richard Munoz",
   "license": "ISC",
