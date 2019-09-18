@@ -27,18 +27,14 @@ const simpleNotificationService = new SNS({ apiVersion });
 //       console.error(err, err.stack));
 // }
 
-// listSubscriptions(topicArn) {
-//   const subslistPromise = this.SimpleNotificationService
-//     .listSubscriptionsByTopic({ TopicArn: topicArn })
-//     .promise();
+const listSubscriptions = async (topicArn) => {
+  const subslistPromise = simpleNotificationService
+    .listSubscriptionsByTopic({ TopicArn: topicArn })
+    .promise();
 
-//   subslistPromise
-//     .then(data =>
-//       console.log(data))
-//     .catch(err =>
-//       console.error(err, err.stack)
-//     );
-// }
+  const subscriptions = await subslistPromise;
+  return subscriptions;
+};
 
 // createTopic(name) {
 //   const createTopicPromise = this.SimpleNotificationService
@@ -64,17 +60,14 @@ const simpleNotificationService = new SNS({ apiVersion });
 //       console.error(err, err.stack));
 // }
 
-// getTopicAttributes(topicArn) {
-//   const getTopicAttribsPromise = this.SimpleNotificationService
-//     .getTopicAttributes({ TopicArn: topicArn })
-//     .promise();
+const getTopicAttributes = async (topicArn) => {
+  const getTopicAttribsPromise = simpleNotificationService
+    .getTopicAttributes({ TopicArn: topicArn })
+    .promise();
 
-//   getTopicAttribsPromise
-//     .then(data =>
-//       console.log(data))
-//     .catch(err =>
-//       console.error(err, err.stack));
-// }
+  const topicAttributes = await getTopicAttribsPromise;
+  return topicAttributes;
+};
 
 // setTopicAttributes() {
 //   const params = {
@@ -104,5 +97,7 @@ const listTopics = async () => {
 };
 
 module.exports = {
+  listSubscriptions,
+  getTopicAttributes,
   listTopics
 };

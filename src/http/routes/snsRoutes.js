@@ -7,6 +7,9 @@ router.get('/hello', (req, res) => {
   res.status(200).send('Hello');
 });
 
+
+router.get('/topics/:id/subscriptions', snsController.listSubscriptions);
+router.get('/topics/:id/attributes', snsController.getTopicAttributes);
 router.get('/topics', snsController.listTopics);
 
 module.exports = router;
