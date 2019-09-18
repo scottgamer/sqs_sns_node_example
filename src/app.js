@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 
 const snsRoutes = require('./http/routes/snsRoutes');

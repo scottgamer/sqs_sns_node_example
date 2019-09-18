@@ -1,8 +1,13 @@
-const { config, SNS } = require('aws-sdk');
+const { config, SNS, SharedIniFileCredentials } = require('aws-sdk');
+
+const profile = process.env.SNS_PROFILE;
+const credentials = new SharedIniFileCredentials({ profile });
 
 config.update({ region: 'us-east-2' });
+config.credentials = credentials;
+
 const apiVersion = '2010-03-31';
-const simpleNotificationService = new SNS({ apiVersion: apiVersion });
+const simpleNotificationService = new SNS({ apiVersion });
 
 // publish(message, topicArn) {
 //   const params = {
