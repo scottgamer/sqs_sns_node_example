@@ -1,113 +1,103 @@
 const { config, SNS } = require('aws-sdk');
 
-class SnsService {
-  constructor() {
-    config.update({ region: 'us-east-2' });
-    this.apiVersion = '2010-03-31';
-    this.SimpleNotificationService = new SNS({ apiVersion: this.apiVersion });
-  }
+config.update({ region: 'us-east-2' });
+const apiVersion = '2010-03-31';
+const simpleNotificationService = new SNS({ apiVersion: apiVersion });
 
-  publish(message, topicArn) {
-    const params = {
-      Message: message,
-      TopicArn: topicArn
-    };
-    const publishTextPromise = this.SimpleNotificationService
-      .publish(params)
-      .promise();
+// publish(message, topicArn) {
+//   const params = {
+//     Message: message,
+//     TopicArn: topicArn
+//   };
+//   const publishTextPromise = this.SimpleNotificationService
+//     .publish(params)
+//     .promise();
 
-    publishTextPromise
-      .then(data => {
-        console.log(`Message ${params.Message} sent to the topic ${params.TopicArn}`);
-        console.log('MessageID is' + data.MessageId);
-      })
-      .catch(err =>
-        console.error(err, err.stack));
-  }
+//   publishTextPromise
+//     .then(data => {
+//       console.log(`Message ${params.Message} sent to the topic ${params.TopicArn}`);
+//       console.log('MessageID is' + data.MessageId);
+//     })
+//     .catch(err =>
+//       console.error(err, err.stack));
+// }
 
-  listSubscriptions(topicArn) {
-    const subslistPromise = this.SimpleNotificationService
-      .listSubscriptionsByTopic({ TopicArn: topicArn })
-      .promise();
+// listSubscriptions(topicArn) {
+//   const subslistPromise = this.SimpleNotificationService
+//     .listSubscriptionsByTopic({ TopicArn: topicArn })
+//     .promise();
 
-    subslistPromise
-      .then(data =>
-        console.log(data))
-      .catch(err =>
-        console.error(err, err.stack)
-      );
-  }
+//   subslistPromise
+//     .then(data =>
+//       console.log(data))
+//     .catch(err =>
+//       console.error(err, err.stack)
+//     );
+// }
 
-  createTopic(name) {
-    const createTopicPromise = this.SimpleNotificationService
-      .createTopic({ Name: name })
-      .promise();
+// createTopic(name) {
+//   const createTopicPromise = this.SimpleNotificationService
+//     .createTopic({ Name: name })
+//     .promise();
 
-    createTopicPromise
-      .then(data =>
-        console.log('Topic ARN is' + data.TopicArn))
-      .catch(err =>
-        console.error(err, err.stack));
-  }
+//   createTopicPromise
+//     .then(data =>
+//       console.log('Topic ARN is' + data.TopicArn))
+//     .catch(err =>
+//       console.error(err, err.stack));
+// }
 
-  deleteTopic(topicArn) {
-    const deleteTopicPromise = this.SimpleNotificationService
-      .deleteTopic({ TopicArn: topicArn })
-      .promise();
+// deleteTopic(topicArn) {
+//   const deleteTopicPromise = this.SimpleNotificationService
+//     .deleteTopic({ TopicArn: topicArn })
+//     .promise();
 
-    deleteTopicPromise
-      .then(data =>
-        console.log('Topic Deleted', data))
-      .catch(err =>
-        console.error(err, err.stack));
-  }
+//   deleteTopicPromise
+//     .then(data =>
+//       console.log('Topic Deleted', data))
+//     .catch(err =>
+//       console.error(err, err.stack));
+// }
 
-  getTopicAttributes(topicArn) {
-    const getTopicAttribsPromise = this.SimpleNotificationService
-      .getTopicAttributes({ TopicArn: topicArn })
-      .promise();
+// getTopicAttributes(topicArn) {
+//   const getTopicAttribsPromise = this.SimpleNotificationService
+//     .getTopicAttributes({ TopicArn: topicArn })
+//     .promise();
 
-    getTopicAttribsPromise
-      .then(data =>
-        console.log(data))
-      .catch(err =>
-        console.error(err, err.stack));
-  }
+//   getTopicAttribsPromise
+//     .then(data =>
+//       console.log(data))
+//     .catch(err =>
+//       console.error(err, err.stack));
+// }
 
-  setTopicAttributes() {
-    const params = {
-      AttributeName: 'DisplayName', /* required */
-      TopicArn: 'arn:aws:sns:us-east-2:817439561489:NODE_TOPIC', /* required */
-      AttributeValue: 'NODE_TOPIC_CHANGED'
-    };
+// setTopicAttributes() {
+//   const params = {
+//     AttributeName: 'DisplayName', /* required */
+//     TopicArn: 'arn:aws:sns:us-east-2:817439561489:NODE_TOPIC', /* required */
+//     AttributeValue: 'NODE_TOPIC_CHANGED'
+//   };
 
-    const setTopicAttribsPromise = this.SimpleNotificationService
-      .setTopicAttributes(params)
-      .promise();
+//   const setTopicAttribsPromise = this.SimpleNotificationService
+//     .setTopicAttributes(params)
+//     .promise();
 
-    setTopicAttribsPromise
-      .then(data =>
-        console.log(data))
-      .catch(err =>
-        console.error(err, err.stack));
-  }
+//   setTopicAttribsPromise
+//     .then(data =>
+//       console.log(data))
+//     .catch(err =>
+//       console.error(err, err.stack));
+// }
 
-  async listTopics() {
+const listTopics = async () => {
+  const listTopicsPromise = simpleNotificationService
+    .listTopics({})
+    .promise();
 
-    const listTopicsPromise = this.SimpleNotificationService
-      .listTopics({})
-      .promise();
+  const topics = await listTopicsPromise;
+  return topics.Topics;
+};
 
-    const topics = await listTopicsPromise;
-    return topics.Topics;
-    // listTopicsPromise
-    //   .then(data =>
-    //     console.log(data.Topics))
-    //   .catch(err =>
-    //     console.error(err, err.stack));
-
-  }
-
-}
-
-module.exports = SnsService;
+module.exports = {
+  listTopics
+};

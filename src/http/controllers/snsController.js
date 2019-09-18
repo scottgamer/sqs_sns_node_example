@@ -1,20 +1,16 @@
-const SnsService = require('../services/snsService');
+const snsService = require('../services/snsService');
 
-class SnsController {
-
-  constructor() {
-    this.snsService = new SnsService();
+const listTopics = async (req, res) => {
+  try {
+    const response = await snsService.listTopics();
+    res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    res.status(error.statusCode).send(error.message);
+    // next(error);
   }
+};
 
-  listTopics = async (req, res, next) => {
-    try {
-      const response = await this.snsService.listTopics();
-      res.status(200).send(response);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-}
-
-module.exports = SnsController;
+module.exports = {
+  listTopics
+};
