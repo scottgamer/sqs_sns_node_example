@@ -1,10 +1,7 @@
-import 'babel-core/register';
-import 'babel-polyfill';
+const express = require('express');
 
-import express from 'express';
-
-import snsRoutes from './http/routes/snsRoutes';
-import sqsRoutes from './http/routes/sqsRoutes';
+const snsRoutes = require('./http/routes/snsRoutes');
+const sqsRoutes = require('./http/routes/sqsRoutes');
 
 const PORT = process.env.PORT || 3000;
 const app = express();

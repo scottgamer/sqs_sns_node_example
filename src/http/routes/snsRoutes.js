@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import SnsController from '../controllers/snsController';
+const Router = require('express');
+const SnsController = require('../controllers/snsController');
 
 const router = Router();
 
@@ -11,4 +11,4 @@ router.get('/hello', (req, res) => {
 
 router.get('/topics', snsController.listTopics);
 
-export default router;
+module.exports = router;

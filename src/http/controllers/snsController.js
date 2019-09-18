@@ -1,4 +1,4 @@
-import SnsService from '../services/snsService';
+const SnsService = require('../services/snsService');
 
 class SnsController {
 
@@ -6,7 +6,7 @@ class SnsController {
     this.snsService = new SnsService();
   }
 
-  async listTopics(req, res, next) {
+  listTopics = async (req, res, next) => {
     try {
       const response = await this.snsService.listTopics();
       res.status(200).send(response);
@@ -17,4 +17,4 @@ class SnsController {
 
 }
 
-export default SnsController;
+module.exports = SnsController;

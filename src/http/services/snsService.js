@@ -1,4 +1,4 @@
-import { config, SNS } from 'aws-sdk';
+const { config, SNS } = require('aws-sdk');
 
 class SnsService {
   constructor() {
@@ -93,23 +93,21 @@ class SnsService {
   }
 
   async listTopics() {
-    try {
-      const listTopicsPromise = this.SimpleNotificationService
-        .listTopics({})
-        .promise();
 
-      const topics = await listTopicsPromise;
-      return topics.Topics;
-      // listTopicsPromise
-      //   .then(data =>
-      //     console.log(data.Topics))
-      //   .catch(err =>
-      //     console.error(err, err.stack));
-    } catch (error) {
-      throw error;
-    }
+    const listTopicsPromise = this.SimpleNotificationService
+      .listTopics({})
+      .promise();
+
+    const topics = await listTopicsPromise;
+    return topics.Topics;
+    // listTopicsPromise
+    //   .then(data =>
+    //     console.log(data.Topics))
+    //   .catch(err =>
+    //     console.error(err, err.stack));
+
   }
 
 }
 
-export default SnsService;
+module.exports = SnsService;
