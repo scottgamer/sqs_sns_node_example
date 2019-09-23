@@ -1,5 +1,16 @@
 const snsService = require('../services/snsService');
 
+const publishMessage = async (req, res) => {
+  try {
+    const topicId = req.params.id;
+    const message = req.body.message;
+    const response = await snsService.publish(message, topicId);
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(error.statusCode).send(error.message);
+  }
+};
+
 const listSubscriptions = async (req, res) => {
   try {
     const topicId = req.params.id;
@@ -31,6 +42,7 @@ const listTopics = async (req, res) => {
 };
 
 module.exports = {
+  publishMessage,
   listSubscriptions,
   getTopicAttributes,
   listTopics

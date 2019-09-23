@@ -9,23 +9,26 @@ config.credentials = credentials;
 const apiVersion = '2010-03-31';
 const simpleNotificationService = new SNS({ apiVersion });
 
-// publish(message, topicArn) {
-//   const params = {
-//     Message: message,
-//     TopicArn: topicArn
-//   };
-//   const publishTextPromise = this.SimpleNotificationService
-//     .publish(params)
-//     .promise();
+const publish = async (message, topicArn) => {
+  const params = {
+    Message: message,
+    TopicArn: topicArn
+  };
+  const publishTextPromise = simpleNotificationService
+    .publish(params)
+    .promise();
 
-//   publishTextPromise
-//     .then(data => {
-//       console.log(`Message ${params.Message} sent to the topic ${params.TopicArn}`);
-//       console.log('MessageID is' + data.MessageId);
-//     })
-//     .catch(err =>
-//       console.error(err, err.stack));
-// }
+  const response = await publishTextPromise;
+  return response;
+
+  // publishTextPromise
+  //   .then(data => {
+  //     console.log(`Message ${params.Message} sent to the topic ${params.TopicArn}`);
+  //     console.log('MessageID is' + data.MessageId);
+  //   })
+  //   .catch(err =>
+  //     console.error(err, err.stack));
+};
 
 const listSubscriptions = async (topicArn) => {
   const subslistPromise = simpleNotificationService
@@ -97,6 +100,7 @@ const listTopics = async () => {
 };
 
 module.exports = {
+  publish,
   listSubscriptions,
   getTopicAttributes,
   listTopics
